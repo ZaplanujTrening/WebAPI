@@ -7,6 +7,7 @@ namespace ZaplanujTreningAPI.Entities
     public class DataContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         private readonly IConfiguration Configuration;
 

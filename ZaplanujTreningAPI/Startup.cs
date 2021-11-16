@@ -12,6 +12,8 @@ using ZaplanujTreningAPI.Middlewares;
 using ZaplanujTreningAPI.Utils.Helpers;
 using ZaplanujTreningAPI.Core.Services.Interfaces;
 using ZaplanujTreningAPI.Core.Services;
+using ZaplanujTreningAPI.Core.Repositories;
+using ZaplanujTreningAPI.Core.Repositories.Interfaces;
 
 namespace ZaplanujTreningAPI
 {
@@ -49,6 +51,7 @@ namespace ZaplanujTreningAPI
 
             services.AddScoped<IJwtUtils, JwtUtils>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +67,7 @@ namespace ZaplanujTreningAPI
             }
 
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseMiddleware<JwtMiddleware>();

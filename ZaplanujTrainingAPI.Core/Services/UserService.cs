@@ -5,28 +5,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZaplanujTreningAPI.Core.Services.Interfaces;
-using ZaplanujTreningAPI.Entities;
 using ZaplanujTreningAPI.Entities.Entities;
 using ZaplanujTreningAPI.Entities.Models;
 using ZaplanujTreningAPI.Entities.Models.Users;
 using ZaplanujTreningAPI.Utils.Helpers;
+using ZaplanujTreningAPI.Core.Repositories.Interfaces;
 
 namespace ZaplanujTreningAPI.Core.Services
 {
     public class UserService : IUserService
     {
-        private DataContext _context;
         private IJwtUtils _jwtUtils;
         private readonly AppSettings _appSettings;
         private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepo;
 
         public UserService(
-            DataContext context,
+            IUserRepository userRepo,
             IJwtUtils jwtUtils,
             IOptions<AppSettings> appSettings,
             IMapper mapper)
         {
-            _context = context;
+            _userRepo = userRepo;
             _jwtUtils = jwtUtils;
             _appSettings = appSettings.Value;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace ZaplanujTreningAPI.Core.Services
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Username == model.Username);
+            var user = _userRepo.GetByUsername(model.Username);
 
             // validate
             if (user == null || !BCryptNet.Verify(model.Password, user.PasswordHash))
@@ -49,8 +49,8 @@ namespace ZaplanujTreningAPI.Core.Services
             removeOldRefreshTokens(user);
 
             // save changes to db
-            _context.Update(user);
-            _context.SaveChanges();
+            _userRepo.Update(user);
+            _userRepo.SaveChanges();
 
             return new AuthenticateResponse(user, jwtToken, refreshToken.Token);
         }
@@ -64,8 +64,8 @@ namespace ZaplanujTreningAPI.Core.Services
             {
                 // revoke all descendant tokens in case this token has been compromised
                 revokeDescendantRefreshTokens(refreshToken, user, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
-                _context.Update(user);
-                _context.SaveChanges();
+                _userRepo.Update(user);
+                _userRepo.SaveChanges();
             }
 
             if (!refreshToken.IsActive)
@@ -79,8 +79,8 @@ namespace ZaplanujTreningAPI.Core.Services
             removeOldRefreshTokens(user);
 
             // save changes to db
-            _context.Update(user);
-            _context.SaveChanges();
+            _userRepo.Update(user);
+            _userRepo.SaveChanges();
 
             // generate new jwt
             var jwtToken = _jwtUtils.GenerateJwtToken(user);
@@ -98,27 +98,43 @@ namespace ZaplanujTreningAPI.Core.Services
 
             // revoke token and save
             revokeRefreshToken(refreshToken, ipAddress, "Revoked without replacement");
-            _context.Update(user);
-            _context.SaveChanges();
+            _userRepo.Update(user);
+            _userRepo.SaveChanges();
+        }
+
+        public void Register(RegisterRequest model)
+        {
+            // validate
+            if (_userRepo.GetByUsername(model.Username) != null)
+                throw new AppException("Username '" + model.Username + "' is already taken");
+
+            // map model to new user object
+            var user = _mapper.Map<User>(model);
+
+            // hash password
+            user.PasswordHash = BCryptNet.HashPassword(model.Password);
+
+            // save user
+            _userRepo.Add(user);
+            _userRepo.SaveChanges();
         }
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users;
+            return _userRepo.GetUsers();
         }
 
         public User GetById(int id)
         {
-            var user = _context.Users.Find(id);
+            var user = _userRepo.GetById(id);
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }
 
         // helper methods
-
         private User getUserByRefreshToken(string token)
         {
-            var user = _context.Users.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            var user = _userRepo.GetWhere(u => u.RefreshTokens.Any(t => t.Token == token));
 
             if (user == null)
                 throw new AppException("Invalid token");

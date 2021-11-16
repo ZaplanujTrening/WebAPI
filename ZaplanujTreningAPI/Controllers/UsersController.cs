@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using ZaplanujTreningAPI.Core.Services.Interfaces;
+using ZaplanujTreningAPI.Entities.Models;
 using ZaplanujTreningAPI.Entities.Models.Users;
 
 namespace ZaplanujTreningAPI.Controllers
@@ -13,10 +16,14 @@ namespace ZaplanujTreningAPI.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
+        private IMapper _mapper;
+        private readonly AppSettings _appSettings;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
@@ -51,6 +58,14 @@ namespace ZaplanujTreningAPI.Controllers
             return Ok(new { message = "Token revoked" });
         }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register(RegisterRequest model)
+        {
+            _userService.Register(model);
+            return Ok(new { message = "Registration successful" });
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -73,7 +88,6 @@ namespace ZaplanujTreningAPI.Controllers
         }
 
         // helper methods
-
         private void setTokenCookie(string token)
         {
             // append cookie with refresh token to the http response

@@ -10,6 +10,9 @@ namespace ZaplanujTreningAPI.Utils.Helpers
         {
             // User -> AuthenticateResponse
             CreateMap<User, AuthenticateResponse>();
+
+            // RegisterRequest -> User
+            CreateMap<RegisterRequest, User>();
         }
     }
 }
