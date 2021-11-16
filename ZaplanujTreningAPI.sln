@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZaplanujTreningAPI", "ZaplanujTreningAPI\ZaplanujTreningAPI.csproj", "{FCFB2BF4-2E02-4D28-A362-2C3E7FEDCF03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZaplanujTreningAPI", "ZaplanujTreningAPI\ZaplanujTreningAPI.csproj", "{FCFB2BF4-2E02-4D28-A362-2C3E7FEDCF03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZaplanujTreningAPI.Core", "ZaplanujTrainingAPI.Core\ZaplanujTreningAPI.Core.csproj", "{DA8C5F9D-0C63-49B5-BC85-FACF5AD3928E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZaplanujTreningAPI.Entities", "ZaplanujTreningAPI.Entities\ZaplanujTreningAPI.Entities.csproj", "{CC451205-D358-498A-8BA0-A9D94297E0AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZaplanujTreningAPI.Utils", "ZaplanujTreningAPI.Commons\ZaplanujTreningAPI.Utils.csproj", "{9FF6ECB6-A979-4531-A1DA-CBF376EE3398}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{FCFB2BF4-2E02-4D28-A362-2C3E7FEDCF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCFB2BF4-2E02-4D28-A362-2C3E7FEDCF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCFB2BF4-2E02-4D28-A362-2C3E7FEDCF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA8C5F9D-0C63-49B5-BC85-FACF5AD3928E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8C5F9D-0C63-49B5-BC85-FACF5AD3928E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8C5F9D-0C63-49B5-BC85-FACF5AD3928E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8C5F9D-0C63-49B5-BC85-FACF5AD3928E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC451205-D358-498A-8BA0-A9D94297E0AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC451205-D358-498A-8BA0-A9D94297E0AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC451205-D358-498A-8BA0-A9D94297E0AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC451205-D358-498A-8BA0-A9D94297E0AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FF6ECB6-A979-4531-A1DA-CBF376EE3398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FF6ECB6-A979-4531-A1DA-CBF376EE3398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FF6ECB6-A979-4531-A1DA-CBF376EE3398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FF6ECB6-A979-4531-A1DA-CBF376EE3398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
