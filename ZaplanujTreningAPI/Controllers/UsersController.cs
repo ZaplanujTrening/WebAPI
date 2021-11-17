@@ -1,11 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using System;
 using ZaplanujTreningAPI.Core.Services.Interfaces;
-using ZaplanujTreningAPI.Entities.Models;
 using ZaplanujTreningAPI.Entities.Models.Users;
 
 namespace ZaplanujTreningAPI.Controllers
@@ -16,14 +13,10 @@ namespace ZaplanujTreningAPI.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
 
-        public UsersController(IUserService userService, IMapper mapper, IOptions<AppSettings> appSettings)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
@@ -60,7 +53,7 @@ namespace ZaplanujTreningAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest model)
+        public IActionResult Register(RegisterUserRequest model)
         {
             _userService.Register(model);
             return Ok(new { message = "Registration successful" });
@@ -80,11 +73,40 @@ namespace ZaplanujTreningAPI.Controllers
             return Ok(user);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, UpdateUserRequest model)
+        {
+            //TODO
+            return Ok(new { message = "TODO" });
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            //TODO
+            return Ok(new { message = "TODO" });
+        }
+
+
+        [HttpGet("dimentions")]
+        public IActionResult GetDimentions(int id)
+        {
+            //TODO
+            return Ok(new { message = "TODO" });
+        }
+
         [HttpGet("{id}/refresh-tokens")]
         public IActionResult GetRefreshTokens(int id)
         {
             var user = _userService.GetById(id);
             return Ok(user.RefreshTokens);
+        }
+
+        [HttpGet("{id}/training-history")]
+        public IActionResult GetTrainingHistory(int id)
+        {
+            //TODO
+            return Ok(new { message = "TODO" });
         }
 
         // helper methods

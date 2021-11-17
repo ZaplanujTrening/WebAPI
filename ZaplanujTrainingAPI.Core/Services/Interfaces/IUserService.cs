@@ -11,6 +11,6 @@ namespace ZaplanujTreningAPI.Core.Services.Interfaces
         void RevokeToken(string token, string ipAddress);
         IEnumerable<User> GetAll();
         User GetById(int id);
-        void Register(RegisterRequest model);
+        void Register(RegisterUserRequest model);
     }
 }

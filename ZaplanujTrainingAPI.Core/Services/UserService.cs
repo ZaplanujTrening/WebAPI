@@ -102,7 +102,7 @@ namespace ZaplanujTreningAPI.Core.Services
             _userRepo.SaveChanges();
         }
 
-        public void Register(RegisterRequest model)
+        public void Register(RegisterUserRequest model)
         {
             // validate
             if (_userRepo.GetByUsername(model.Username) != null)

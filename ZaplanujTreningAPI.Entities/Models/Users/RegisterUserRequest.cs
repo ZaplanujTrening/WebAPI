@@ -2,7 +2,7 @@
 
 namespace ZaplanujTreningAPI.Entities.Models.Users
 {
-    public class RegisterRequest
+    public class RegisterUserRequest
     {
         [Required]
         public string FirstName { get; set; }
