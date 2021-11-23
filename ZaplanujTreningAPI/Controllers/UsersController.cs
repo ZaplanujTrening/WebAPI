@@ -9,7 +9,7 @@ namespace ZaplanujTreningAPI.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/auth")]
     public class UsersController : ControllerBase
     {
         private IUserService _userService;

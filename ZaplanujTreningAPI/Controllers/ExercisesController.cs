@@ -6,7 +6,7 @@ namespace ZaplanujTreningAPI.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/exercise")]
     public class ExercisesController : ControllerBase
     {
         [AllowAnonymous]
