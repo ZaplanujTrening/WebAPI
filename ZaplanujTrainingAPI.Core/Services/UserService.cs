@@ -126,7 +126,7 @@ namespace ZaplanujTreningAPI.Core.Services
 
         public User GetById(int id)
         {
-            var user = _userRepo.GetById(id);
+            var user = _userRepo.GetUserById(id);
             if (user == null) throw new KeyNotFoundException("User not found");
             return user;
         }

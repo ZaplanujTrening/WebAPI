@@ -59,6 +59,7 @@ namespace ZaplanujTreningAPI.Controllers
             return Ok(new { message = "Registration successful" });
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
         {

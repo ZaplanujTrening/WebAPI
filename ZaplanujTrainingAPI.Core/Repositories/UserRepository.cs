@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using ZaplanujTreningAPI.Core.Repositories.Interfaces;
 using ZaplanujTreningAPI.Entities;
 using ZaplanujTreningAPI.Entities.Entities;
@@ -25,7 +22,7 @@ namespace ZaplanujTreningAPI.Core.Repositories
             return Get(where);
         }
 
-        public User GetById(int id)
+        public User GetUserById(int id)
         {
             return GetById(id);
         }

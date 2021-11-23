@@ -54,7 +54,7 @@ namespace ZaplanujTreningAPI.Core.Repositories
             return _dbset.Where(where).FirstOrDefault<T>();
         }
 
-        public virtual T GetById(long id)
+        public virtual T GetById(int id)
         {
             return _dbset.Find(id);
         }
